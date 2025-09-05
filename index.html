@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ABA Bank Statement Verification</title>
+  <style>
+    :root{
+      --blue: #0a2a66;      /* Primary bank blue */
+      --blue-900:#071c46;   /* Deep navy */
+      --red:  #c1121f;      /* Accent red */
+      --ink: #0b132b;       /* Text ink */
+      --muted:#5a6786;      /* Secondary text */
+      --border:#e6e9f2;     /* Light borders */
+      --surface:#ffffff;    /* Cards / panels */
+      --bg:#f7f8fc;         /* Page background */
+    }
+
+    html, body { height: 100%; }
+    body{
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, "Liberation Sans", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .wrap{
+      min-height: 100svh;
+      display: grid;
+      place-items: center;
+      padding: clamp(16px, 4vw, 40px);
+    }
+
+    .card{
+      width: min(880px, 100%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(7,28,70,0.08);
+      padding: clamp(20px, 5vw, 48px);
+      text-align: center;
+    }
+
+    /* --- Rosette Badge --- */
+    .badge{
+      position: relative;
+      margin-inline: auto;
+      width: clamp(180px, 40vw, 280px);
+      aspect-ratio: 1 / 1;
+      display: grid;
+      place-items: center;
+      margin-bottom: clamp(16px, 3vw, 28px);
+    }
+
+    /* Scalloped edge via conic-gradient mask */
+    .badge::before{
+      content:"";
+      position:absolute; inset:0;
+      --petals: 48;
+      background:
+        radial-gradient(circle at center, var(--blue) 64%, transparent 64%) center/100% 100% no-repeat,
+        conic-gradient(from 0deg,
+          var(--blue) calc(360deg/var(--petals)),
+          transparent 0) center/100% 100% no-repeat;
+      -webkit-mask:
+        radial-gradient(circle at center, #000 62%, transparent 62%),
+        
+        /* create scallops by repeating radial masks around */
+        paint(progress);
+      border-radius: 50%;
+      filter: drop-shadow(0 6px 14px rgba(7,28,70,.2));
+    }
+
+    /* Fallback simple double ring if paint() not available */
+    @supports not (background: paint(progress)){
+      .badge::before{
+        background: radial-gradient(circle at center, var(--blue) 64%, transparent 64%);
+        box-shadow: 0 0 0 10px var(--blue), 0 0 0 18px var(--red);
+      }
+    }
+
+    .badge-inner{
+      position:absolute; inset:6%;
+      background: #fff;
+      border-radius: 50%;
+      border: 8px solid var(--blue);
+      display:grid; place-items:center;
+    }
+
+    /* Big Tick (SVG sized with font for crispness) */
+    .tick{
+      width: 55%;
+      height: 55%;
+      display:block;
+    }
+
+    /* Ribbon */
+    .ribbon{
+      position:absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: -14%;
+      background: var(--red);
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: .55rem 1.1rem;
+      border-radius: 8px;
+      box-shadow: 0 8px 18px rgba(193,18,31,.3);
+      font-size: clamp(.68rem, 1.6vw, .9rem);
+    }
+    .ribbon::before,
+    .ribbon::after{
+      content:""; position:absolute; top:0; bottom:0; width:16px; background: var(--red);
+    }
+    .ribbon::before{ right:100%; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
+    .ribbon::after{ left:100%;  clip-path: polygon(0 0, 100% 50%, 0 100%); }
+
+    /* Headings & sections */
+    h1{
+      font-size: clamp(1.25rem, 2.6vw, 1.75rem);
+      margin: clamp(24px, 4vw, 32px) 0 6px;
+      color: var(--blue-900);
+      font-weight: 800;
+    }
+    .subtitle{ color: var(--muted); margin-bottom: clamp(6px, 1.8vw, 10px); }
+
+    .details{
+      margin: clamp(16px, 3vw, 24px) auto 0;
+      width: min(640px, 100%);
+      border-top: 1px solid var(--border);
+      padding-top: clamp(12px, 2.4vw, 18px);
+      text-align:left;
+      line-height:1.5;
+      font-size: clamp(.98rem, 2vw, 1.05rem);
+    }
+
+    .kv{ display:grid; grid-template-columns: 220px 1fr; gap: 10px 18px; align-items:start; }
+    .kv dt{ color: var(--muted); }
+    .kv dd{ margin:0; font-weight:600; color: var(--ink); }
+
+    .balance{
+      margin-top: clamp(10px, 2.6vw, 18px);
+      padding-top: clamp(10px, 2.6vw, 18px);
+      border-top: 1px dashed var(--border);
+      font-size: clamp(1.05rem, 2.6vw, 1.25rem);
+      display:flex; justify-content:space-between; gap: 16px;
+    }
+    .balance .label{ color: var(--blue); font-weight:700; }
+    .balance .amount{ font-weight:800; color: var(--blue-900); }
+
+    footer{
+      margin-top: clamp(18px, 3.2vw, 28px);
+      color: var(--muted);
+      font-size: .87rem;
+    }
+
+    /* Small screens: stack details labels above values */
+    @media (max-width: 520px){
+      .kv{ grid-template-columns: 1fr; }
+      .kv dt{ font-weight:600; color: var(--blue); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-labelledby="page-title">
+    <section class="card">
+      <div class="badge" aria-hidden="true">
+        <div class="badge-inner">
+          <!-- Tick SVG -->
+          <svg class="tick" viewBox="0 0 48 48" role="img" aria-label="Verified">
+            <path d="M18.5 31.5L9.8 22.8l-2.8 2.8 11.5 11.5L41 14.6l-2.8-2.8z" fill="none" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="ribbon" aria-hidden="true">Statement Verified</div>
+      </div>
+
+      <h1 id="page-title">ABA Bank Statement Verification</h1>
+      <p class="subtitle">Details</p>
+
+      <section class="details" aria-label="Verification details">
+        <dl class="kv">
+          <dt>Account Name</dt>
+          <dd>Thomas Frederick Watson</dd>
+          <dt>Account Number</dt>
+          <dd><code>*******82</code></dd>
+          <dt>Statement Valid as of</dt>
+          <dd>5 September 2025</dd>
+        </dl>
+
+        <div class="balance" aria-label="Account Balance">
+          <div class="label">Account Balance</div>
+          <div class="amount">$24,038,773.01</div>
+        </div>
+      </section>
+
+      <footer>
+        © 2025 ABA Bank — Statement Verification
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
