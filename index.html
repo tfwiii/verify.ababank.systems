@@ -26,21 +26,8 @@
       -moz-osx-font-smoothing: grayscale;
     }
 
-    header{
-      width: 100%;
-      display: flex;
-      align-items: center;
-      padding: 12px 20px;
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-    }
-    header img{
-      height: 40px;
-      width: auto;
-    }
-
     .wrap{
-      min-height: calc(100svh - 64px);
+      min-height: 100svh;
       display: grid;
       place-items: center;
       padding: clamp(16px, 4vw, 40px);
@@ -54,6 +41,15 @@
       box-shadow: 0 10px 30px rgba(7,28,70,0.08);
       padding: clamp(20px, 5vw, 48px);
       text-align: center;
+    }
+
+    .card .logo{
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .card .logo img{
+      height: 40px;
+      width: auto;
     }
 
     .badge{
@@ -73,28 +69,6 @@
       border-radius: 50%;
       box-shadow: 0 6px 14px rgba(7,28,70,.2);
     }
-
-    .ribbon{
-      position:absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      bottom: -14%;
-      background: var(--red);
-      color: #fff;
-      font-weight: 700;
-      letter-spacing: .06em;
-      text-transform: uppercase;
-      padding: .55rem 1.1rem;
-      border-radius: 8px;
-      box-shadow: 0 8px 18px rgba(193,18,31,.3);
-      font-size: clamp(.68rem, 1.6vw, .9rem);
-    }
-    .ribbon::before,
-    .ribbon::after{
-      content:""; position:absolute; top:0; bottom:0; width:16px; background: var(--red);
-    }
-    .ribbon::before{ right:100%; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
-    .ribbon::after{ left:100%;  clip-path: polygon(0 0, 100% 50%, 0 100%); }
 
     h1{
       font-size: clamp(1.25rem, 2.6vw, 1.75rem);
@@ -141,14 +115,13 @@
   </style>
 </head>
 <body>
-  <header>
-    <img src="aba-web-top-logo.png" alt="ABA Bank Logo">
-  </header>
   <main class="wrap" aria-labelledby="page-title">
     <section class="card">
+      <div class="logo">
+        <img src="aba-web-top-logo.png" alt="ABA Bank Logo">
+      </div>
       <div class="badge" aria-hidden="true">
         <img src="check.jpg" alt="Verified">
-        <div class="ribbon" aria-hidden="true">Statement Verified</div>
       </div>
 
       <h1 id="page-title">ABA Bank Statement Verification</h1>
