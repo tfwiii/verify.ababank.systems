@@ -58,7 +58,7 @@
       width: clamp(180px, 40vw, 280px);
       display: grid;
       place-items: center;
-      margin-bottom: clamp(24px, 5vw, 40px); /* increased margin for space */
+      margin-bottom: clamp(24px, 5vw, 40px);
     }
 
     .badge img{
@@ -86,7 +86,7 @@
     }
 
     .kv{ display:grid; grid-template-columns: 220px 1fr; gap: 10px 18px; align-items:start; }
-    .kv dt{ color: var(--muted); }
+    .kv dt{ color: var(--blue); font-weight:700; }
     .kv dd{ margin:0; font-weight:600; color: var(--ink); }
 
     .balance{
@@ -107,7 +107,8 @@
 
     @media (max-width: 520px){
       .kv{ grid-template-columns: 1fr; }
-      .kv dt{ font-weight:600; color: var(--blue); }
+      .kv dt{ font-weight:700; color: var(--blue); }
+      .card .logo img{ height: 80px; }
     }
   </style>
 </head>
