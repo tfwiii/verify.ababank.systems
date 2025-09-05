@@ -6,22 +6,18 @@
   <title>ABA Bank Statement Verification</title>
   <style>
     :root{
-      --blue: #0a2a66;
-      --blue-900:#071c46;
-      --red:  #c1121f;
-      --ink: #ffffff; /* change text to white */
-      --muted:#ffffff;
+      --blue-bg: rgb(0,91,122); /* extracted background colour from logo */
+      --ink: #0b132b;
+      --muted:#5a6786;
       --border:#e6e9f2;
       --surface:#ffffff;
-      --bg: rgb(0,91,122); /* extracted background colour from logo */
     }
 
     html, body { height: 100%; }
     body{
       margin:0;
       font-family: system-ui, -apple-system, Segoe UI, Roboto, "Liberation Sans", Arial, sans-serif;
-      background: var(--bg);
-      color: var(--ink);
+      background: var(--blue-bg);
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -35,10 +31,13 @@
 
     .card{
       width: min(880px, 100%);
-      background: transparent;
-      border: none;
+      background: var(--surface);
+      border: 1px solid var(--border);
       border-radius: 20px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+      padding: clamp(20px, 5vw, 48px);
       text-align: center;
+      color: var(--ink);
     }
 
     .card .logo{
@@ -68,44 +67,43 @@
     h1{
       font-size: clamp(1.25rem, 2.6vw, 1.75rem);
       margin: clamp(24px, 4vw, 32px) 0 20px;
-      color: #ffffff;
       font-weight: 800;
+      color: var(--ink);
     }
 
     .details{
       margin: clamp(16px, 3vw, 24px) auto 0;
       width: min(640px, 100%);
+      border-top: 1px solid var(--border);
       padding-top: clamp(20px, 4vw, 28px);
       text-align:left;
       line-height:1.5;
       font-size: clamp(.98rem, 2vw, 1.05rem);
-      color:#ffffff;
     }
 
     .kv{ display:grid; grid-template-columns: 220px 1fr; gap: 10px 18px; align-items:start; }
-    .kv dt{ color: #ffffff; font-weight:700; }
-    .kv dd{ margin:0; font-weight:600; color: #ffffff; }
+    .kv dt{ font-weight:700; }
+    .kv dd{ margin:0; font-weight:600; }
 
     .balance{
       margin-top: clamp(10px, 2.6vw, 18px);
       padding-top: clamp(10px, 2.6vw, 18px);
-      border-top: 1px dashed rgba(255,255,255,0.5);
+      border-top: 1px dashed var(--border);
       font-size: clamp(1.05rem, 2.6vw, 1.25rem);
       display:flex; justify-content:space-between; gap: 16px;
-      color:#ffffff;
     }
     .balance .label{ font-weight:700; }
     .balance .amount{ font-weight:800; }
 
     footer{
       margin-top: clamp(18px, 3.2vw, 28px);
-      color: rgba(255,255,255,0.7);
+      color: var(--muted);
       font-size: .87rem;
     }
 
     @media (max-width: 520px){
       .kv{ grid-template-columns: 1fr; }
-      .kv dt{ font-weight:700; color: #ffffff; }
+      .kv dt{ font-weight:700; }
       .card .logo img{ height: 80px; }
     }
   </style>
