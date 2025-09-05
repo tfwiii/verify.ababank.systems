@@ -93,4 +93,56 @@
       margin-top: clamp(10px, 2.6vw, 18px);
       padding-top: clamp(10px, 2.6vw, 18px);
       border-top: 1px dashed var(--border);
-      font-size: clamp(1.05rem, 2.6vw
+      font-size: clamp(1.05rem, 2.6vw, 1.25rem);
+      display:flex; justify-content:space-between; gap: 16px;
+    }
+    .balance .label{ color: var(--blue); font-weight:700; }
+    .balance .amount{ font-weight:800; color: var(--blue-900); }
+
+    footer{
+      margin-top: clamp(18px, 3.2vw, 28px);
+      color: var(--muted);
+      font-size: .87rem;
+    }
+
+    @media (max-width: 520px){
+      .kv{ grid-template-columns: 1fr; }
+      .kv dt{ font-weight:600; color: var(--blue); }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap" aria-labelledby="page-title">
+    <section class="card">
+      <div class="logo">
+        <img src="aba-web-top-logo.png" alt="ABA Bank Logo">
+      </div>
+      <div class="badge" aria-hidden="true">
+        <img src="check.jpg" alt="Verified">
+      </div>
+
+      <h1 id="page-title">ABA Bank Statement Verification</h1>
+
+      <section class="details" aria-label="Verification details">
+        <dl class="kv">
+          <dt>Account Name</dt>
+          <dd>Thomas Frederick Watson</dd>
+          <dt>Account Number</dt>
+          <dd><code>*******82</code></dd>
+          <dt>Statement Valid as of</dt>
+          <dd>5 September 2025</dd>
+        </dl>
+
+        <div class="balance" aria-label="Account Balance">
+          <div class="label">Account Balance</div>
+          <div class="amount">$24,038,773.01</div>
+        </div>
+      </section>
+
+      <footer>
+        © 2025 ABA Bank — Statement Verification
+      </footer>
+    </section>
+  </main>
+</body>
+</html>
