@@ -48,7 +48,7 @@
       margin-bottom: 20px;
     }
     .card .logo img{
-      height: 160px; /* increased from 40px to 160px */
+      height: 160px;
       width: auto;
     }
 
@@ -58,7 +58,7 @@
       width: clamp(180px, 40vw, 280px);
       display: grid;
       place-items: center;
-      margin-bottom: clamp(16px, 3vw, 28px);
+      margin-bottom: clamp(24px, 5vw, 40px); /* increased margin for space */
     }
 
     .badge img{
@@ -70,17 +70,16 @@
 
     h1{
       font-size: clamp(1.25rem, 2.6vw, 1.75rem);
-      margin: clamp(24px, 4vw, 32px) 0 6px;
+      margin: clamp(24px, 4vw, 32px) 0 20px;
       color: var(--blue-900);
       font-weight: 800;
     }
-    .subtitle{ color: var(--muted); margin-bottom: clamp(6px, 1.8vw, 10px); }
 
     .details{
       margin: clamp(16px, 3vw, 24px) auto 0;
       width: min(640px, 100%);
       border-top: 1px solid var(--border);
-      padding-top: clamp(12px, 2.4vw, 18px);
+      padding-top: clamp(20px, 4vw, 28px);
       text-align:left;
       line-height:1.5;
       font-size: clamp(.98rem, 2vw, 1.05rem);
@@ -94,57 +93,4 @@
       margin-top: clamp(10px, 2.6vw, 18px);
       padding-top: clamp(10px, 2.6vw, 18px);
       border-top: 1px dashed var(--border);
-      font-size: clamp(1.05rem, 2.6vw, 1.25rem);
-      display:flex; justify-content:space-between; gap: 16px;
-    }
-    .balance .label{ color: var(--blue); font-weight:700; }
-    .balance .amount{ font-weight:800; color: var(--blue-900); }
-
-    footer{
-      margin-top: clamp(18px, 3.2vw, 28px);
-      color: var(--muted);
-      font-size: .87rem;
-    }
-
-    @media (max-width: 520px){
-      .kv{ grid-template-columns: 1fr; }
-      .kv dt{ font-weight:600; color: var(--blue); }
-    }
-  </style>
-</head>
-<body>
-  <main class="wrap" aria-labelledby="page-title">
-    <section class="card">
-      <div class="logo">
-        <img src="aba-web-top-logo.png" alt="ABA Bank Logo">
-      </div>
-      <div class="badge" aria-hidden="true">
-        <img src="check.jpg" alt="Verified">
-      </div>
-
-      <h1 id="page-title">ABA Bank Statement Verification</h1>
-      <p class="subtitle">Details</p>
-
-      <section class="details" aria-label="Verification details">
-        <dl class="kv">
-          <dt>Account Name</dt>
-          <dd>Thomas Frederick Watson</dd>
-          <dt>Account Number</dt>
-          <dd><code>*******82</code></dd>
-          <dt>Statement Valid as of</dt>
-          <dd>5 September 2025</dd>
-        </dl>
-
-        <div class="balance" aria-label="Account Balance">
-          <div class="label">Account Balance</div>
-          <div class="amount">$24,038,773.01</div>
-        </div>
-      </section>
-
-      <footer>
-        © 2025 ABA Bank — Statement Verification
-      </footer>
-    </section>
-  </main>
-</body>
-</html>
+      font-size: clamp(1.05rem, 2.6vw
