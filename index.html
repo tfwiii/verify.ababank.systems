@@ -6,14 +6,14 @@
   <title>ABA Bank Statement Verification</title>
   <style>
     :root{
-      --blue: #0a2a66;      /* Primary bank blue */
-      --blue-900:#071c46;   /* Deep navy */
-      --red:  #c1121f;      /* Accent red */
-      --ink: #0b132b;       /* Text ink */
-      --muted:#5a6786;      /* Secondary text */
-      --border:#e6e9f2;     /* Light borders */
-      --surface:#ffffff;    /* Cards / panels */
-      --bg:#f7f8fc;         /* Page background */
+      --blue: #0a2a66;
+      --blue-900:#071c46;
+      --red:  #c1121f;
+      --ink: #0b132b;
+      --muted:#5a6786;
+      --border:#e6e9f2;
+      --surface:#ffffff;
+      --bg:#f7f8fc;
     }
 
     html, body { height: 100%; }
@@ -43,7 +43,6 @@
       text-align: center;
     }
 
-    /* --- Rosette Badge --- */
     .badge{
       position: relative;
       margin-inline: auto;
@@ -54,49 +53,14 @@
       margin-bottom: clamp(16px, 3vw, 28px);
     }
 
-    /* Scalloped edge via conic-gradient mask */
-    .badge::before{
-      content:"";
-      position:absolute; inset:0;
-      --petals: 48;
-      background:
-        radial-gradient(circle at center, var(--blue) 64%, transparent 64%) center/100% 100% no-repeat,
-        conic-gradient(from 0deg,
-          var(--blue) calc(360deg/var(--petals)),
-          transparent 0) center/100% 100% no-repeat;
-      -webkit-mask:
-        radial-gradient(circle at center, #000 62%, transparent 62%),
-        
-        /* create scallops by repeating radial masks around */
-        paint(progress);
+    .badge img{
+      width: 100%;
+      height: auto;
+      display: block;
       border-radius: 50%;
-      filter: drop-shadow(0 6px 14px rgba(7,28,70,.2));
+      box-shadow: 0 6px 14px rgba(7,28,70,.2);
     }
 
-    /* Fallback simple double ring if paint() not available */
-    @supports not (background: paint(progress)){
-      .badge::before{
-        background: radial-gradient(circle at center, var(--blue) 64%, transparent 64%);
-        box-shadow: 0 0 0 10px var(--blue), 0 0 0 18px var(--red);
-      }
-    }
-
-    .badge-inner{
-      position:absolute; inset:6%;
-      background: #fff;
-      border-radius: 50%;
-      border: 8px solid var(--blue);
-      display:grid; place-items:center;
-    }
-
-    /* Big Tick (SVG sized with font for crispness) */
-    .tick{
-      width: 55%;
-      height: 55%;
-      display:block;
-    }
-
-    /* Ribbon */
     .ribbon{
       position:absolute;
       left: 50%;
@@ -119,7 +83,6 @@
     .ribbon::before{ right:100%; clip-path: polygon(100% 0, 0 50%, 100% 100%); }
     .ribbon::after{ left:100%;  clip-path: polygon(0 0, 100% 50%, 0 100%); }
 
-    /* Headings & sections */
     h1{
       font-size: clamp(1.25rem, 2.6vw, 1.75rem);
       margin: clamp(24px, 4vw, 32px) 0 6px;
@@ -158,7 +121,6 @@
       font-size: .87rem;
     }
 
-    /* Small screens: stack details labels above values */
     @media (max-width: 520px){
       .kv{ grid-template-columns: 1fr; }
       .kv dt{ font-weight:600; color: var(--blue); }
@@ -169,12 +131,7 @@
   <main class="wrap" aria-labelledby="page-title">
     <section class="card">
       <div class="badge" aria-hidden="true">
-        <div class="badge-inner">
-          <!-- Tick SVG -->
-          <svg class="tick" viewBox="0 0 48 48" role="img" aria-label="Verified">
-            <path d="M18.5 31.5L9.8 22.8l-2.8 2.8 11.5 11.5L41 14.6l-2.8-2.8z" fill="none" stroke="var(--blue)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </div>
+        <img src="check.jpg" alt="Verified">
         <div class="ribbon" aria-hidden="true">Statement Verified</div>
       </div>
 
